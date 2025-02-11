@@ -57,7 +57,7 @@ jobs:
         if [[ "${{ github.event_name }}" == "release" ]]; then
           # In case of release event the tag will be the next version
           # build version will be the same as tag
-          TAG=${{ steps.bump_version.outputs.newTag }}
+          TAG=${{ github.event.release.tag_name }}
           BUILD_VERSION=${TAG}
         else
           BUILD_VERSION=${{ github.run_number }}
