@@ -9,6 +9,9 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'vJailbreak',
+			editLink: {
+				baseUrl: 'https://platform9.github.io/vjailbreak',
+			},
 			social: {
 				github: 'https://github.com/platform9/vjailbreak',
 			},
