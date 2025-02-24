@@ -1,0 +1,42 @@
+// @ts-check
+import starlight from '@astrojs/starlight';
+import { defineConfig } from 'astro/config';
+
+// https://astro.build/config
+export default defineConfig({
+	site: 'https://sharma-tapas.github.io',
+	base: 'vjailbreak',
+	integrations: [
+		starlight({
+			title: 'vJailbreak',
+			social: {
+				github: 'https://github.com/platform9/vjailbreak',
+			},
+			logo: {
+				src: './src/assets/logo.jpg',
+				replacesTitle: true,
+			},
+			sidebar: [
+				{
+					label: 'Introduction',
+					items: [
+						// Each item here is one entry in the navigation menu.
+						// manually done so to we can keep the order
+						{ label: 'What is vJailbreak', slug: 'introduction/what_is_vjailbreak' },
+						{ label: 'components', slug: 'introduction/components' },
+						{ label: 'Getting Started', slug: 'introduction/getting_started' },
+						{ label: 'prerequisites', slug: 'introduction/prerequisites' },
+					],
+				},
+				{
+					label: 'Guide',
+					autogenerate: { directory: 'guides' },
+				},
+				{
+					label: 'Release Notes',
+					autogenerate: { directory: 'release_docs' },
+				},
+			],
+		}),
+	],
+});
