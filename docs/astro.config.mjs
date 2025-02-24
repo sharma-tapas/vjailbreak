@@ -4,6 +4,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://sharma-tapas.github.io',
+	base: 'vjailbreak',
 	integrations: [
 		starlight({
 			title: 'vJailbreak',
