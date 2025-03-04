@@ -91,6 +91,9 @@ jobs:
           # Get the commits specific to this release branch since the last release (tag)
           # Assumes tags are named v1.2.3, v2.0.0, etc.  Adjust if your tagging scheme is different.
           git fetch --tags
+
+          # Get the commits specific to this release branch since the last release (tag)
+          # Assumes tags are named v1.2.3, v2.0.0, etc.  Adjust if your tagging scheme is different.
           LAST_TAG=$(git describe --tags --abbrev=0 --match "v*"  $(git rev-list --tags --max-count=1))
 
           if [[ -z "$LAST_TAG" ]]; then
