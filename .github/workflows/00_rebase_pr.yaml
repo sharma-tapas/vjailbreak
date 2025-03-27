@@ -78,10 +78,12 @@ jobs:
 
           echo "going to branch: $TARGET_BRANCH"
           git fetch origin $TARGET_BRANCH
-          git rebase origin/$TARGET_BRANCH
+          #git rebase origin/$TARGET_BRANCH
+          gh pr edit --base $TARGET_BRANCH
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.event.repository.name }}
           TARGET_BRANCH: ${{ steps.find_release_branch.outputs.latest_branch }}
 
       - name: Push changes
@@ -91,3 +93,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.event.repository.name }}
