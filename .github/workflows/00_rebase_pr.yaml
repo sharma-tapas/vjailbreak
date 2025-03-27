@@ -19,8 +19,6 @@ jobs:
       - name: What was the comment
         run: |
          echo "Comment: ${{ github.event.comment.body }}"
-         BOOL=${{ github.event.issue.pull_request }} && startsWith(github.event.comment.body, '/rebase')
-         echo "Will it run: $BOOL"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -62,6 +60,7 @@ jobs:
       - name: Find latest release branch
         id: find_release_branch
         run: |
+          git fetch origin
           LATEST_BRANCH=$(git branch -r | grep 'origin/release-v' | sed 's/origin\///' | sort -V | tail -n 1)
           echo "Latest release branch: $LATEST_BRANCH"
           echo "latest_branch=$LATEST_BRANCH" >> $GITHUB_OUTPUT
@@ -77,12 +76,13 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions Bot"
 
-          TARGET_BRANCH="${{ steps.find_release_branch.outputs.latest_branch }}"
+          echo "going to branch: $TARGET_BRANCH"
           git fetch origin $TARGET_BRANCH
           git rebase origin/$TARGET_BRANCH
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_BRANCH: ${{ steps.find_release_branch.outputs.latest_branch }}
 
       - name: Push changes
         if: steps.check-permissions.outputs.is_authorized == 'true'
