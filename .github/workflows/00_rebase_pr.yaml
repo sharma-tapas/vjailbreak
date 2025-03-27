@@ -65,10 +65,10 @@ jobs:
           LATEST_BRANCH=$(git branch -r | grep 'origin/release-v' | sed 's/origin\///' | sort -V | tail -n 1)
           echo "Latest release branch: $LATEST_BRANCH"
           echo "latest_branch=$LATEST_BRANCH" >> $GITHUB_OUTPUT
-          echo "::set-output name=latest_branch::$LATEST_BRANCH"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          is_authorized: ${{ steps.check-permissions.outputs.is_authorized }}
 
       - name: Rebase current PR onto latest release branch
         if: steps.check-permissions.outputs.is_authorized == 'true'
@@ -76,7 +76,6 @@ jobs:
           # Configure Git
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions Bot"
-
           echo "going to branch: $TARGET_BRANCH"
           git fetch origin $TARGET_BRANCH
           #git rebase origin/$TARGET_BRANCH
